@@ -1202,7 +1202,7 @@ html{font-size:20px}body{margin:0;background:#eef3ff}
 <section class="np-stage" id="np-stage" aria-label="新聞內容與平台草稿"></section>
 <div class="np-controls"><button class="np-control" id="np-prev" aria-label="上一題">←</button><div class="np-progress" aria-hidden="true"><div class="np-progress-bar" id="np-progress"></div></div><button class="np-control" id="np-next" aria-label="下一題">→</button><div class="np-page-count" id="np-page-count" aria-live="polite"></div></div>
 </main></div>
-<footer class="np-footer">男性泌尿科新聞與衛教｜保留來源與文稿版本・未自動發布至社群</footer>
+<footer class="np-footer"><span id="updated"></span>男性泌尿科新聞與衛教｜保留來源與文稿版本・未自動發布至社群</footer>
 </div>
 <noscript>本資料庫需要啟用 JavaScript 以瀏覽新聞與平台草稿。</noscript>
 <script>
@@ -1211,6 +1211,7 @@ const records=[{"id": "n2s-cb6fc1a788d2c89bc18d", "title": "碳離子放射治�
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const months=[...new Set(records.map(a=>a.date.slice(0,7)))].sort().reverse();
+$('updated').textContent=records[0]?'最新收錄／生成日期：'+records[0].date+'（台北時間）｜':'';
 let month=months[0],selected=records[0]?.id,visible=[];
 const status=a=>a.warning||({pending_review:'待醫療審核',collected:'已收錄／尚未生成',blocked:'禁止發布／待釐清'}[a.status]||a.status);
 function sourceCard(s){return `<div class="np-card"><h3>新聞／研究來源</h3><p class="source-title">${esc(s.title)}</p><p class="meta">${esc(s.publisher||'來源未標示')}｜原始刊登：${esc((s.published_at||'未知').slice(0,10))}${s.date_precision?'（精確度：'+esc(s.date_precision)+'）':''}<br>PMID：${esc(s.pmid||'無')}｜DOI：${esc(s.doi||'無')}</p><p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">閱讀原始來源 ↗</a></p><h4>${s.access_scope==='abstract'?'已取得的研究摘要（原文）':'已取得的新聞內容'}</h4><p>${esc(s.summary||'目前僅取得標題與連結，未取得內文；不據此補寫醫療內容。')}</p><p class="meta">${s.access_scope==='abstract'?'僅依摘要，未取得或核對全文。':'收錄範圍以已取得資料為限；請開啟原始來源核對。'}</p></div>`}
